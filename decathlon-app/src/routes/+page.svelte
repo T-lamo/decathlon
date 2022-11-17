@@ -1,6 +1,9 @@
 <script lang="ts">
+	import ListCartProduct from './../features/boutique/components/cart/ListCartProduct.svelte';
+	import ListProduct from '../features/boutique/components/product/ListProduct.svelte';
 	import welcome from '$lib/images/svelte-welcome.webp';
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
+	import ListComments from '../features/boutique/components/product/comments/ListComments.svelte';
 
 	
 </script>
@@ -11,8 +14,24 @@
 </svelte:head>
 
 <section>
-	<div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde repellendus placeat sapiente quaerat similique modi iste, itaque reiciendis, perspiciatis minus distinctio dicta, quibusdam nihil! Earum obcaecati voluptatum quos harum inventore!</div>
+	<ListProduct></ListProduct>
+	<div>
+		<ListComments></ListComments>
+	</div>
+	<div>
+		<ListCartProduct></ListCartProduct>
+	</div>
 </section>
 
-<style>
+<style lang="scss" scoped>
+	@use "./../lib/css/mixin.scss" as mixin;
+	p {
+		color: blue;
+	}
+	@include mixin.xs {
+	p {
+		color: red;
+	}
+}
+
 </style>

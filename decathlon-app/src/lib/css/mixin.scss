@@ -5,19 +5,13 @@
     }
 }
 
-@mixin sm{
+@mixin md{
     /* // Small devices (landscape phones, 576px and up) */
     @media (min-width: 576px) { 
         @content;
     }
 }
 
-@mixin md{
-    @media (min-width: 768px) { 
-        @content;
-
-    }
-}
 @mixin lg{
     @media (min-width: 992px) {
         @content;
