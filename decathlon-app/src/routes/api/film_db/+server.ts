@@ -1,9 +1,25 @@
 import { film } from '../../../lib/server/film.query';
 import { json } from '@sveltejs/kit';
 import sequelize from '$lib/server/orm';
-import { cart_item, discount, order_detail, order_item, payment_detail, product, product_category, product_image, product_inventory, product_range, shopping_session, store, track_time, user, user_adress, user_payment } from '$lib/models/dbmodel';
+import {
+	cart_item,
+	discount,
+	order_detail,
+	order_item,
+	payment_detail,
+	product,
+	product_category,
+	product_image,
+	product_inventory,
+	product_range,
+	shopping_session,
+	store,
+	track_time,
+	user,
+	user_adress,
+	user_payment
+} from '$lib/models/dbmodel';
 import { Op } from 'sequelize';
-
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET() {
@@ -28,21 +44,17 @@ export async function GET() {
 		// await store.sync({ force: true });
 		sequelize.sync({ force: true });
 
-
 		const res = await product_range.findAll({
 			include: product_category
 		});
-		console.log("value",JSON.stringify(res));
-
-
-
+		console.log('value', JSON.stringify(res));
 	} catch (error) {
 		console.error('Unable to connect to the database:', error);
-	  }
+	}
 	// const res = await film.select();
 	const res = await product_category.findAll({
 		include: product_range
 	});
-	
+
 	return json(res);
 }

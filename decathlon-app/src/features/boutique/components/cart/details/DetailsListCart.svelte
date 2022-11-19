@@ -1,14 +1,14 @@
 <script lang="ts">
-	import CommandeCart from './CommandeCart.svelte';
+	import DetailsCart from './DetailsCart.svelte';
 
-	let arr = [1, 2];
+	let arr = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5];
 </script>
 
 <div class="container">
 	<ul class="container">
 		{#each arr as item}
 			<li>
-				<CommandeCart />
+				<DetailsCart />
 			</li>
 		{/each}
 	</ul>

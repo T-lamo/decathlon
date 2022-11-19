@@ -10,6 +10,6 @@
 		position: absolute;
 		top: 2px;
 		right: 2px;
-        cursor: pointer;
+		cursor: pointer;
 	}
 </style>

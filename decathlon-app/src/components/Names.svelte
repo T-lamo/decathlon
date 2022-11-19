@@ -11,8 +11,8 @@
 		movie_selected = [...value];
 	});
 
-	function remove_from_selected(){
-		console.log("test");
+	function remove_from_selected() {
+		console.log('test');
 	}
 
 	onDestroy(movie_unsubscribe);

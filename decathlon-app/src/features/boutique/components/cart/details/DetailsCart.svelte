@@ -25,7 +25,7 @@
 
 				<i class="fa-solid fa-minus" />
 			</div>
-			<span class="btn btn-primary">50$</span>
+			<span class="btn btn-primary">50</span>
 		</div>
 		<div class="line" />
 		<div class="icons">

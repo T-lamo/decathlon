@@ -1,23 +1,26 @@
 <script lang="ts">
 	import Cart from './Cart.svelte';
-    let arr = [1,2,3,4,5,1,2,3,4,5]
-
+	let arr = [1, 2];
 </script>
 
-<ul class="container">
-	{#each arr as item}
-		<li>
-      <Cart></Cart>
-    </li>
-	{/each}
-</ul>
+<div class="container">
+	<ul class="container">
+		{#each arr as item}
+			<li>
+				<Cart />
+			</li>
+		{/each}
+	</ul>
+	<h1>Total: 0$</h1>
+</div>
 
 <style lang="scss">
-    ul {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px 1fr));
-        gap: 1rem;
-
-
-    }
+	ul {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px 1fr));
+		gap: 1rem;
+		li:hover {
+			background: var(--gray-2);
+		}
+	}
 </style>
