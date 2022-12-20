@@ -1,9 +1,26 @@
 <script lang="ts">
-	import { show_side_bar } from '$lib/store/ui';
+	import type { Product } from '$lib/models';
+	import { search_engine } from '$lib/search-engine/algolia';
+	import { cart_store } from '$lib/store/cart-store';
+	import { store_search_engine_result } from '$lib/store/product';
+	import { search_engine_store } from '$lib/store/search-engine-store';
+	import { show_side_bar, store_dark_screen } from '$lib/store/ui';
+	import { onDestroy } from 'svelte';
+
+	$: product_qty = 0;
 
 	function toggle_sidbar() {
 		show_side_bar.update((value) => !value);
 	}
+	const unsubscribe_cart_store = cart_store.subscribe((data) => {
+		product_qty = data.length;
+	});
+
+	let search_value = '';
+
+	$: search_engine_store.search(search_value);
+
+	onDestroy(unsubscribe_cart_store);
 </script>
 
 <div class="container">
@@ -21,24 +38,30 @@
 		</h2>
 		<form class="search hide-xs">
 			<i class="fa-solid fa-magnifying-glass" />
-			<input type="text" placeholder="Recherche" />
+			<input bind:value={search_value} type="text" placeholder="Recherche" />
 		</form>
 		<ul>
 			<li>
 				<a href="/cart">
-					<i class="fa-solid fa-cart-shopping" />
+					<div class="cart_qty">
+						<span class="qty">{product_qty}</span>
+						<i class="fa-solid fa-cart-shopping" />
+					</div>
 				</a>
 			</li>
 			<li>
 				<i class="fa-solid fa-user" />
 			</li>
 			<li>
-                <i class="fa-solid fa-signal"></i>			
-					<!-- <i class="fa-solid fa-house" /> -->
+				<a href="/places">
+					<i class="fa-sharp fa-solid fa-map-location" />
+				</a>
+				<!-- <i class="fa-solid fa-house" /> -->
 			</li>
 			<li>
 				<i class="fa-solid fa-right-to-bracket" />
 			</li>
+
 			<!-- <li>
 				<i class="fa-solid fa-right-from-bracket" />
 			</li> -->
@@ -46,7 +69,7 @@
 	</div>
 	<form class="ctn-search hide-xl-lg-md-sm">
 		<i class="fa-solid fa-magnifying-glass" />
-		<input type="text" placeholder="Recherche" />
+		<input bind:value={search_value} id="search" type="text" placeholder="Recherche" />
 	</form>
 </div>
 
@@ -95,7 +118,7 @@
 					align-self: center;
 					margin-left: 1rem;
 				}
-				
+
 				input {
 					background: var(--gray-1);
 					min-width: 400px;
@@ -138,6 +161,17 @@
 			}
 			a {
 				color: white;
+			}
+			.cart_qty {
+				position: relative;
+				.qty {
+					position: fixed;
+					color: var(--gray-1);
+					background-color: red;
+					position: fixed;
+					border-radius: 50%;
+					padding: 2px;
+				}
 			}
 		}
 

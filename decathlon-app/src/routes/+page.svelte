@@ -10,11 +10,22 @@
 	import { onMount } from 'svelte';
 	import CartProduct from './../features/boutique/components/cart/CartProduct.svelte';
 	import { show_side_bar } from '$lib/store/ui';
+	import { decathlon_products } from '$lib/recommendation/data';
+	import { decathlon_profiling } from '$lib/recommendation';
+	import { make_product_proposition } from '$lib/recommendation/utils';
+	import {  store_products } from '$lib/store/product';
+	
 
 	onMount(() => {
-		console.log(window);
 		show_side_bar.update((value) => true);
+		store_products.set(decathlon_products); 
+		// console.log("decathlon product",decathlon_products);
+		// console.log("profiling", decathlon_profiling);
+		// console.log("decathlon proposition",make_product_proposition(decathlon_profiling,2))
+	
 	});
+
+	
 </script>
 
 <svelte:head>
@@ -25,18 +36,19 @@
 <section class="container">
 	<div class="main-cart">
 		<div class="main">
-			<div class="promotion">
-				<h1>Promotion</h1>
-				<ListProduct />
-			</div>
 			<div class="segmentation">
 				<h1>Rien que pour vous!</h1>
 				<ListSegmentation />
 			</div>
+			<div class="promotion">
+				<h1>Promotion</h1>
+				<ListProduct product_list={decathlon_products} />
+			</div>
+			
 			<div class="proposition">
 				<h1>Ce que nous vous proposons!</h1>
 
-				<ListProduct />
+				<ListProduct product_list={[]}/>
 			</div>
 		</div>
 		<div class="cart hide-xl-lg-md-sm-xs">

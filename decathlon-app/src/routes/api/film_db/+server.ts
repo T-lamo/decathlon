@@ -18,7 +18,7 @@ import {
 	user,
 	user_adress,
 	user_payment
-} from '$lib/models/dbmodel';
+} from '$lib/schema/index';
 import { Op } from 'sequelize';
 
 /** @type {import('./$types').RequestHandler} */

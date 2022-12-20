@@ -1,11 +1,14 @@
 <script lang="ts">
+	import type { Product } from '$lib/models';
+
+	export let product: Product;
 </script>
 
 <div class="container card">
 	<div class="image" />
 	<div class="info">
-		<h4>Lorem ipsum</h4>
-		<h4>Lorem ipsum</h4>
+		<h4>{product.name}</h4>
+		<h4>Qte: {product.qty}</h4>
 	</div>
 </div>
 

@@ -1,13 +1,22 @@
 <script lang="ts">
+	import type { Product } from '$lib/models';
+	import { cart_store } from '$lib/store/cart-store';
+	import { get } from 'svelte/store';
 	import Cart from './Cart.svelte';
-	let arr = [1, 2];
+	
+	let list_product:Product[]=[];
+	cart_store.subscribe(data=>{
+		list_product = data;
+	}) 
+
+	
 </script>
 
 <div class="container">
 	<ul class="container">
-		{#each arr as item}
+		{#each list_product as item}
 			<li>
-				<Cart />
+				<Cart product={item}/>
 			</li>
 		{/each}
 	</ul>

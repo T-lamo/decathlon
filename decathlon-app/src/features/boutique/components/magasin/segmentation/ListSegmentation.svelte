@@ -1,13 +1,16 @@
 <script lang="ts">
+	import { segmentations } from '$lib/recommendation/data';
 	import SimpleTextCard from './../../../../../components/common/SimpleTextCard.svelte';
-	let arr = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5];
+	
 </script>
 
 <ul class="container">
-	{#each arr as item}
-		<li>
-			<SimpleTextCard label={'Test'} />
-		</li>
+	{#each segmentations as item}
+		<a href="/search/{item.label}">
+			<li>
+				<SimpleTextCard label={item.label} />
+			</li>
+		</a>
 	{/each}
 </ul>
 

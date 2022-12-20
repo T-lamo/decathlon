@@ -2,7 +2,6 @@
 	export let label: string;
 
 	$: label = label;
-	console.log(label);
 </script>
 
 <div class="container ">
@@ -16,8 +15,15 @@
 		align-items: center;
 		justify-content: center;
 		color: var(--secondary-black);
-		font-size: 2rem;
+		font-size: x-small;
+		font-weight: 600;
 		padding: 1rem;
 		border-radius: 4px;
+		min-height: 50px;
+	}
+
+	.container:hover {
+		background: var(--gray-2);
+		cursor: pointer;
 	}
 </style>

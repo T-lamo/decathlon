@@ -1,16 +1,19 @@
 <script lang="ts">
-	import Product from './Product.svelte';
-	let arr = [1, 2, 3, 4, 5, 1];
+	import type { Product } from '$lib/models';
+	import ProductComp from './ProductComp.svelte';
+	export let product_list: Product[];
 
-	function redirect() {}
+	function redirect() {
+		console.log("click on product")
+	}
 </script>
 
 <ul class="container">
-	{#each arr as item}
+	{#each product_list as item}
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<a href="/product-details/{item}">
+		<a href="/product-details/{item.id}">
 			<li on:click={redirect}>
-				<Product />
+				<ProductComp product={item}/>
 			</li></a
 		>
 	{/each}

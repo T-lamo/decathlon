@@ -1,6 +1,21 @@
 <script lang="ts">
-	let article_qty: number = 4;
-	let price: number = 100;
+	import type { Product } from "$lib/models";
+	import { cart_store } from "$lib/store/cart-store";
+	import { onDestroy } from "svelte";
+
+	let recap: { price: number; qty: number }={price:0, qty:0};
+
+	const unsubscribe_cart_store=cart_store.subscribe((data)=>{
+              recap= data.reduce<{ price: number; qty: number }>(
+                    (previous: { price: number; qty: number }, curr: Product) => {
+                        previous.price += curr.price * curr.qty;
+                        previous.qty += curr.qty;
+                        return previous;
+                    },
+                    { price: 0, qty: 0 }
+                );
+            })
+	onDestroy(unsubscribe_cart_store);
 </script>
 
 <div class="container">
@@ -8,10 +23,12 @@
 	<div class="line" />
 	<div class="main">
 		<div class="info">
-			<span> Sous total: {article_qty} articles</span>
-			<span> {price}$</span>
+			<span> Sous total: {recap.qty} articles</span>
+			<span> ${recap.price}</span>
 		</div>
 		<span>Frais de livraison: Calcule à l'étape suivant</span>
+		  		
+
 	</div>
 
 	<div class="line" />

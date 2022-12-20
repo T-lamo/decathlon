@@ -16,18 +16,7 @@ import type {
 	IUserAdress,
 	IUserPayment
 } from '$lib/interfaces';
-
-export class cart_item implements ICartItem {
-	id?: number;
-	qty = 0;
-	product_id = 0;
-	createdAt?: string;
-	updatedAt?: string;
-
-	constructor(fields: Partial<ICartItem>) {
-		Object.assign(this, fields);
-	}
-}
+import type { ICoordinate } from '$lib/recommendation/interface';
 
 export class discount implements IDiscount {
 	id?: number;
@@ -43,6 +32,17 @@ export class discount implements IDiscount {
 	}
 }
 
+export class cart_item implements ICartItem {
+	id?: number;
+	qty = 0;
+	product_id = 0;
+	createdAt?: string;
+	updatedAt?: string;
+
+	constructor(fields: Partial<ICartItem>) {
+		Object.assign(this, fields);
+	}
+}
 export class order_detail implements IOrderDetail {
 	id?: number;
 	total = 0;
@@ -76,27 +76,40 @@ export class payment_detail implements IPaymentDetail {
 		Object.assign(this, fields);
 	}
 }
-
-export class product implements IProduct {
+export class shopping_session implements IShoppingSession {
 	id?: number;
-	name = '';
-	desc?: string;
-	price = 0;
-	productCategoryId = 0;
+	total = 0;
+	userId = 0;
 	createdAt?: string;
 	updatedAt?: string;
 	constructor(fields: Partial<IOrderItem>) {
 		Object.assign(this, fields);
 	}
 }
-export class product_category implements IProductCategory {
+
+export class Product implements IProduct {
 	id?: number;
 	name = '';
 	desc?: string;
-	productRangeId = 0;
+	price = 10;
+	productCategoryId = 0;
+	in_sales = false;
+	qty = 1;
+	coordinate?: ICoordinate;
 	createdAt?: string;
 	updatedAt?: string;
-	constructor(fields: Partial<IOrderItem>) {
+
+	constructor(fields: Partial<Product>) {
+		Object.assign(this, fields);
+	}
+}
+export class ProductCategory implements IProductCategory {
+	id?: number;
+	label = '';
+	desc?: string;
+	createdAt?: string;
+	updatedAt?: string;
+	constructor(fields: Partial<IProductCategory>) {
 		Object.assign(this, fields);
 	}
 }
@@ -130,16 +143,7 @@ export class product_range implements IProductRange {
 		Object.assign(this, fields);
 	}
 }
-export class shopping_session implements IShoppingSession {
-	id?: number;
-	total = 0;
-	userId = 0;
-	createdAt?: string;
-	updatedAt?: string;
-	constructor(fields: Partial<IOrderItem>) {
-		Object.assign(this, fields);
-	}
-}
+
 export class store implements IStore {
 	id?: number;
 	adressLine = '';

@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width" />
-		<script src="https://kit.fontawesome.com/b52ec3718d.js" crossorigin="anonymous"></script>
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+	<meta name="viewport" content="width=device-width" />
+	<script src="https://kit.fontawesome.com/b52ec3718d.js" crossorigin="anonymous"></script>
+	<!-- leaflet -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+		integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+	
 		<!-- <link rel="stylesheet" href="./../lib/css/base.scss">
 		<link rel="stylesheet" href="./../lib/css/debug.scss">
 		<link rel="stylesheet" href="./../lib/css/reset.scss"> -->
 
-		%sveltekit.head%
-	</head>
-	<body data-sveltekit-prefetch>
-		<div>%sveltekit.body%</div>
-	</body>
+	%sveltekit.head%
+</head>
+
+<body data-sveltekit-prefetch>
+	<div>%sveltekit.body%</div>
+
+	<!-- leaflet -->
+	<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+		integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+	<!-- fin leaflet -->
+</body>
+
 </html>

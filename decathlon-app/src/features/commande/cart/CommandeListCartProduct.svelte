@@ -1,14 +1,21 @@
 <script lang="ts">
+	import type { Product } from '$lib/models';
+	import { cart_store } from '$lib/store/cart-store';
+	import { onDestroy } from 'svelte';
 	import CommandeCart from './CommandeCart.svelte';
-
-	let arr = [1, 2];
+	
+	let list_product: Product[] = [];
+	const unsubscribe=cart_store.subscribe((data)=>list_product=data)
+	
+	onDestroy(unsubscribe)
 </script>
 
 <div class="container">
+
 	<ul class="container">
-		{#each arr as item}
+		{#each list_product as item }
 			<li>
-				<CommandeCart />
+				<CommandeCart product={item}/>
 			</li>
 		{/each}
 	</ul>

@@ -1,4 +1,11 @@
 <script lang="ts">
+	import type { Product } from '$lib/models';
+	import { cart_store } from '$lib/store/cart-store';
+	
+
+	export let product: Product;
+	$: total = product.qty * product.price;
+	 
 	let image: string =
 		'https://images.unsplash.com/photo-1603884574615-7b6ec4198a8c?ixid=MnwxMDkyNjJ8MHwxfHNlYXJjaHwzNDF8fG1vdmllfGVufDB8fHx8MTY2ODY0MjgyMQ&ixlib=rb-4.0.3&w=500&h=1000';
 </script>
@@ -6,32 +13,32 @@
 <div class="container">
 	<div class="image" style="background-image: url({image})" />
 	<div class="main">
-		<h2>Nom du produit</h2>
+		<h2>{product.name}</h2>
 		<div class="line" />
 		<div class="description">
 			<h3>Description</h3>
 			<p>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste dignissimos non quo quisquam
-				ipsa nostrum ab aspernatur laudantium doloribus ex omnis obcaecati eos nam mollitia unde
-				quaerat, quia laborum porro.
+				{product.desc}
 			</p>
 		</div>
 		<div class="line" />
 		<div class="price">
-			<span class="btn btn-primary">$25</span>
+			<span class="btn btn-primary">$ {product.price}</span>
 			<div>
-				<i class="fa-solid fa-plus" />
-				<span class="btn btn-primary">2</span>
-
-				<i class="fa-solid fa-minus" />
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<i class="fa-solid fa-minus" on:click={()=>cart_store.decrement_single_qty(product)} />
+				<span class="btn btn-primary">{product.qty}</span>
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<i class="fa-solid fa-plus" on:click={()=>cart_store.increment_single_qty(product)} />
 			</div>
-			<span class="btn btn-primary">50$</span>
+			<span class="btn btn-primary">${total}</span>
 		</div>
 		<div class="line" />
 		<div class="icons">
 			<span><i class="fa-solid fa-heart" /></span>
 			<div>
-				<span><i class="fa-solid fa-trash" /></span>
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<span><i class="fa-solid fa-trash" on:click={()=>cart_store.remove_product(product)} /></span>
 				<span><i class="fa-sharp fa-solid fa-pen" /> </span>
 			</div>
 		</div>

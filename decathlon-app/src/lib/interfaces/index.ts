@@ -1,3 +1,5 @@
+import type { ICoordinate } from "$lib/recommendation/interface";
+
 export interface IMovie {
 	_id: number;
 	title: string;
@@ -6,14 +8,6 @@ export interface IMovie {
 	len?: number;
 	date?: string;
 	cover?: string;
-}
-
-export interface ICartItem {
-	id?: number;
-	qty: number;
-	product_id: number;
-	createdAt?: string;
-	updatedAt?: string;
 }
 
 export interface IDiscount {
@@ -27,6 +21,13 @@ export interface IDiscount {
 	updatedAt?: string;
 }
 
+export interface ICartItem {
+	id?: number;
+	qty: number;
+	product_id: number;
+	createdAt?: string;
+	updatedAt?: string;
+}
 export interface IOrderDetail {
 	id?: number;
 	total: number;
@@ -52,23 +53,7 @@ export interface IPaymentDetail {
 	updatedAt?: string;
 }
 
-export interface IProduct {
-	id?: number;
-	name: string;
-	desc?: string;
-	price: number;
-	productCategoryId: number;
-	createdAt?: string;
-	updatedAt?: string;
-}
-export interface IProductCategory {
-	id?: number;
-	name: string;
-	desc?: string;
-	productRangeId: number;
-	createdAt?: string;
-	updatedAt?: string;
-}
+
 export interface IProductImage {
 	id?: number;
 	cover?: string;
@@ -90,13 +75,7 @@ export interface IProductRange {
 	createdAt?: string;
 	updatedAt?: string;
 }
-export interface IShoppingSession {
-	id?: number;
-	total: number;
-	userId: number;
-	createdAt?: string;
-	updatedAt?: string;
-}
+
 export interface IStore {
 	id?: number;
 	adressLine: string;
@@ -112,6 +91,14 @@ export interface ITrackTime {
 	spentTime: string;
 	userId: number;
 	productId: number;
+	createdAt?: string;
+	updatedAt?: string;
+}
+
+export interface IShoppingSession {
+	id?: number;
+	total: number;
+	userId: number;
 	createdAt?: string;
 	updatedAt?: string;
 }
@@ -146,3 +133,27 @@ export interface IUserPayment {
 	createdAt?: string;
 	updatedAt?: string;
 }
+
+
+export interface IProduct {
+	id?: number;
+	name: string;
+	desc?: string;
+	price: number;
+	productCategoryId: number;
+	in_sales: boolean;
+    coordinate?: ICoordinate;
+	createdAt?: string;
+	updatedAt?: string;
+}
+
+export interface IProductCategory {
+	id?: number;
+	label: string;
+	desc?: string;
+	createdAt?: string;
+	updatedAt?: string;
+}
+
+
+

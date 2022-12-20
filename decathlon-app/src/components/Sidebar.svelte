@@ -1,13 +1,19 @@
 <script lang="ts">
-	let arr = [1, 2];
+	import { categories } from "$lib/recommendation/data";
+
+
+	categories
 </script>
 
 <div class="container">
 	<ul>
-		{#each arr as item}
-			<li>
-				categorie {item}
-			</li>
+		{#each categories as item}
+			<a href="/search/{item.label}">
+				<li>
+					{item.label}
+				</li>
+			</a>
+			
 		{/each}
 	</ul>
 </div>
@@ -19,6 +25,8 @@
 		position: fixed;
 		top: calc(70px);
 		height: 100vh;
+		font-size: large;
+		font-weight: 700;
 		ul {
 			padding: 1rem;
 			display: grid;
@@ -38,6 +46,7 @@
 			li:hover {
 				background: var(--gray-2);
 				border-bottom: 2px solid var(--gray-3);
+				cursor: pointer;
 			}
 		}
 	}

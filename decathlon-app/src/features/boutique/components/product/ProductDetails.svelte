@@ -1,6 +1,19 @@
 <script lang="ts">
+	import type { Product } from '$lib/models';
+	import { make_product_proposition } from '$lib/recommendation/utils';
+	import {   store_product_propostion, store_profiling } from '$lib/store/product';
+	import { onMount } from 'svelte';
+	import { get } from 'svelte/store';
 	import ListComments from './comments/ListComments.svelte';
 	import ListProduct from './ListProduct.svelte';
+	import { Profiling } from '$lib/recommendation/model';
+	import { segmentations } from '$lib/recommendation/data';
+	import type { IProfiling } from '$lib/recommendation/interface';
+	import { cart_store } from '$lib/store/cart-store';
+
+	export let product: Product;
+
+	$: product_proposition = [] as Product[]; 
 	let product_images: string[] = [
 		'https://images.unsplash.com/photo-1603884574615-7b6ec4198a8c?ixid=MnwxMDkyNjJ8MHwxfHNlYXJjaHwzNDF8fG1vdmllfGVufDB8fHx8MTY2ODY0MjgyMQ&ixlib=rb-4.0.3&w=500&h=1000',
 		'https://images.unsplash.com/photo-1623864804069-438e36809fc2?ixid=MnwxMDkyNjJ8MHwxfHNlYXJjaHwxODV8fG1vdmllfGVufDB8fHx8MTY2ODg1NDU0Ng&ixlib=rb-4.0.3&w=500&h=1000',
@@ -8,6 +21,20 @@
 	];
 	let image_selected = 1;
 
+	onMount(() => {
+		// console.log("products",get(store_products));
+	});
+	store_profiling.subscribe((profiling)=>{
+		if(profiling.clic_products.length>=3){
+			store_product_propostion.set(make_product_proposition(profiling,6) as { prod: Product; dist: number; }[]);
+			product_proposition = get(store_product_propostion).map((data)=> data.prod);
+			console.log("inside store propostion ", get(store_product_propostion));
+		}
+	})
+
+	// store_product_propostion.subscribe((proposition)=>{
+	// 	console.log("inside store propostion ", proposition);
+	// })
 	function nextImage() {
 		if (image_selected < product_images.length - 1) {
 			image_selected += 1;
@@ -19,6 +46,7 @@
 			image_selected -= 1;
 		}
 	}
+	
 </script>
 
 <div class="container">
@@ -44,29 +72,27 @@
 			<h2>Détails</h2>
 			<div class="description-info">
 				<div class="description">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque ratione neque, voluptate
-					sed sit magni adipisci natus asperiores iste, doloribus dicta perspiciatis, laudantium
-					aperiam tempora?
+					Description: {product.name}
 				</div>
 				<div class="information-tech">
 					<p>Poids: 24kg</p>
 					<p>Etat: Neuf</p>
 				</div>
 			</div>
-			<button class="btn btn-primary">Ajouter au panier</button>
+			<button class="btn btn-primary" on:click={()=>cart_store.add_product(product)}>Ajouter au panier</button>
 		</div>
 	</div>
 	<div class="similaire">
 		<h1>Produits similaires</h1>
-		<ListProduct />
+		<ListProduct product_list={product_proposition} />
 	</div>
 	<div class="promotion">
 		<h1>Profiter de nos rabais</h1>
-		<ListProduct />
+		<ListProduct product_list={[]} />
 	</div>
 	<div class="complemenaire">
 		<h1>Complementaire</h1>
-		<ListProduct />
+		<ListProduct product_list={[]} />
 	</div>
 	<div class="commentaire">
 		<h1>Commentaires</h1>

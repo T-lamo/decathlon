@@ -1,9 +1,9 @@
 import type { IMovie } from '../interfaces/index';
 export class Movie implements IMovie {
-	_id?: number;
-	title: string;
-	overview: string;
-	actor: string;
+	_id=-1;
+	title= "";
+	overview= "";
+	actor= "";
 	len?: number;
 	date?: string;
 	cover?: string;
