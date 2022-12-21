@@ -47,7 +47,6 @@ export async function GET() {
 		const res = await product_range.findAll({
 			include: product_category
 		});
-		console.log('value', JSON.stringify(res));
 	} catch (error) {
 		console.error('Unable to connect to the database:', error);
 	}

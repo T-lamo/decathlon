@@ -87,7 +87,6 @@ export function sort_distance_user_product(
 }
 
 export function make_product_proposition(profiling: IProfiling, qty = 4): { prod: IProduct; dist: number }[] {
-	//console.log("inside make product proposition", profiling);
 	let product_proposition: { prod: IProduct; dist: number }[] = sort_distance_user_product(
 		distance_user_all_product(profiling)
 	);

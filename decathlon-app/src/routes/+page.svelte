@@ -38,7 +38,7 @@
 		<div class="main">
 			<div class="segmentation">
 				<h1>Rien que pour vous!</h1>
-				<ListSegmentation />
+				<ListSegmentation category="all"/>
 			</div>
 			<div class="promotion">
 				<h1>Promotion</h1>

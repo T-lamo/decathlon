@@ -10,6 +10,5 @@ export async function GET() {
 export async function POST() {
 	const result = await fetch('https://restapi.fr/api/cerimovieautre');
 	const data = await result.json();
-	console.log('inside post film');
 	return json(data);
 }

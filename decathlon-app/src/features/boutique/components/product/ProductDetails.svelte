@@ -22,18 +22,15 @@
 	let image_selected = 1;
 
 	onMount(() => {
-		// console.log("products",get(store_products));
 	});
 	store_profiling.subscribe((profiling)=>{
 		if(profiling.clic_products.length>=3){
 			store_product_propostion.set(make_product_proposition(profiling,6) as { prod: Product; dist: number; }[]);
 			product_proposition = get(store_product_propostion).map((data)=> data.prod);
-			console.log("inside store propostion ", get(store_product_propostion));
 		}
 	})
 
 	// store_product_propostion.subscribe((proposition)=>{
-	// 	console.log("inside store propostion ", proposition);
 	// })
 	function nextImage() {
 		if (image_selected < product_images.length - 1) {

@@ -1,8 +1,7 @@
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ fetch, params }: any) => {
-	const res = await fetch(`/api/film/`, { method: 'POST' });
-	//const item = await res.json();
-	return { item: params.id };
+
+	return { item: params.category };
 };
 export const prerender = false;

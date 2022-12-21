@@ -29,7 +29,6 @@
 				return profilling;
 			})
 		}
-		console.log("inside redirection");
 	});
 </script>
 

@@ -1,12 +1,13 @@
 <script lang="ts">
+	import { categories } from '$lib/recommendation/data';
 	import { segmentations } from '$lib/recommendation/data';
 	import SimpleTextCard from './../../../../../components/common/SimpleTextCard.svelte';
-	
+	export let category:string;
 </script>
 
 <ul class="container">
 	{#each segmentations as item}
-		<a href="/search/{item.label}">
+		<a href="/search/{category}/{item.label}">
 			<li>
 				<SimpleTextCard label={item.label} />
 			</li>

@@ -2,18 +2,14 @@
 	import type { Product } from '$lib/models';
 	import ProductComp from './ProductComp.svelte';
 	export let product_list: Product[];
-
-	function redirect() {
-		console.log("click on product")
-	}
 </script>
 
 <ul class="container">
 	{#each product_list as item}
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<a href="/product-details/{item.id}">
-			<li on:click={redirect}>
-				<ProductComp product={item}/>
+			<li>
+				<ProductComp product={item} />
 			</li></a
 		>
 	{/each}
@@ -23,7 +19,7 @@
 	.container {
 		gap: 1rem;
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
 	}
 	li {
 		cursor: pointer;
