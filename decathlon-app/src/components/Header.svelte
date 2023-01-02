@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { index } from './../../.svelte-kit/output/server/nodes/2.js';
 	import type { Product } from '$lib/models';
 	import { search_engine } from '$lib/search-engine/algolia';
 	import { cart_store } from '$lib/store/cart-store';
@@ -44,7 +45,7 @@
 			<li>
 				<a href="/cart">
 					<div class="cart_qty">
-						<span class="qty">{product_qty}</span>
+						<!-- <span class="qty">{product_qty}</span> -->
 						<i class="fa-solid fa-cart-shopping" />
 					</div>
 				</a>
@@ -82,7 +83,6 @@
 		display: flex;
 		flex-direction: column;
 		background: var(--gray-2);
-
 		.header {
 			display: flex;
 			background: var(--primary-1);

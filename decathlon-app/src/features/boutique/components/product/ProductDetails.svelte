@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Product } from '$lib/models';
 	import { make_product_proposition } from '$lib/recommendation/utils';
-	import {   store_product_propostion, store_profiling } from '$lib/store/product';
+	import {   store_products, store_product_propostion, store_profiling } from '$lib/store/product';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
 	import ListComments from './comments/ListComments.svelte';
@@ -25,7 +25,7 @@
 	});
 	store_profiling.subscribe((profiling)=>{
 		if(profiling.clic_products.length>=3){
-			store_product_propostion.set(make_product_proposition(profiling,6) as { prod: Product; dist: number; }[]);
+			store_product_propostion.set(make_product_proposition(profiling,3) as { prod: Product; dist: number; }[]);
 			product_proposition = get(store_product_propostion).map((data)=> data.prod);
 		}
 	})
@@ -85,12 +85,14 @@
 	</div>
 	<div class="promotion">
 		<h1>Profiter de nos rabais</h1>
-		<ListProduct product_list={[]} />
+		<ListProduct product_list={get(store_products).filter(product=>product.in_sales==true)} />
+
 	</div>
-	<div class="complemenaire">
+	<!-- <div class="complemenaire">
 		<h1>Complementaire</h1>
 		<ListProduct product_list={[]} />
-	</div>
+
+	</div> -->
 	<div class="commentaire">
 		<h1>Commentaires</h1>
 		<ListComments />

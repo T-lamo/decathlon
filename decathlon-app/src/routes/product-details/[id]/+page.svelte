@@ -26,8 +26,11 @@
 				if(profilling.clic_products.filter((p)=> p.id == product.id).length==0){
 					profilling.clic_products=[...profilling.clic_products, product];
 				}
+				console.log("profilling", profilling);
+
 				return profilling;
 			})
+
 		}
 	});
 </script>

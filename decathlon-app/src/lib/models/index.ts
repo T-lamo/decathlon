@@ -94,6 +94,8 @@ export class Product implements IProduct {
 	price = 10;
 	productCategoryId = 0;
 	in_sales = false;
+	sales_qty =0;
+	cover = "";
 	qty = 1;
 	coordinate?: ICoordinate;
 	createdAt?: string;
@@ -101,6 +103,13 @@ export class Product implements IProduct {
 
 	constructor(fields: Partial<Product>) {
 		Object.assign(this, fields);
+	}
+
+	get_product_price() : number {
+		if(this.in_sales){
+			return this.price - this.price*this.sales_qty/100;
+		}
+		return this.price;
 	}
 }
 export class ProductCategory implements IProductCategory {

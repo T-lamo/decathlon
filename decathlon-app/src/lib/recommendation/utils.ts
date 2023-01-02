@@ -53,7 +53,7 @@ export function user_position(profiling: IProfiling): ICoordinate {
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				user_position_to_divide.get(curr_seg.label)! / profiling.axes.length
 			);
-
+			console.log("user coordinate",user_coordinate )
 			return user_coordinate;
 		},
 		new Map<string, number>()
@@ -65,6 +65,7 @@ export function distance_user_all_product(
 	profiling: IProfiling
 ): { prod: IProduct; dist: number }[] {
 	const user_coordinate = user_position(profiling);
+	console.log("profiling utils.ts", profiling);
 	return profiling.all_products.reduce<{ prod: IProduct; dist: number }[]>(
 		(previous: { prod: IProduct; dist: number }[], product: IProduct) => {
 			previous.push({
@@ -90,6 +91,8 @@ export function make_product_proposition(profiling: IProfiling, qty = 4): { prod
 	let product_proposition: { prod: IProduct; dist: number }[] = sort_distance_user_product(
 		distance_user_all_product(profiling)
 	);
+	
+	console.log("product user distance (utils.ts):", product_proposition);
 	
 	product_proposition=product_proposition.filter((product)=>{
 		 const names: string[] =profiling.clic_products.map((prod)=>{

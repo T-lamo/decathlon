@@ -2,6 +2,10 @@
 
 <div class="container">
 	<footer>
+		<p>
+			<a href="/contact"> Nous contacter </a>
+		</p>
+		<p>Tel: 0749286021</p>
 		<p>Copyright © 2021 constellation, Inc.</p>
 	</footer>
 </div>
@@ -17,5 +21,10 @@
 
 	footer p {
 		margin-bottom: 0;
+	}
+
+	footer a {
+		cursor: pointer;
+		text-decoration: underline;
 	}
 </style>

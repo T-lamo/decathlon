@@ -8,7 +8,7 @@
 <div class="items">
 	<div
 		class="image"
-		style="background-image: url('https://images.unsplash.com/photo-1603884574615-7b6ec4198a8c?ixid=MnwxMDkyNjJ8MHwxfHNlYXJjaHwzNDF8fG1vdmllfGVufDB8fHx8MTY2ODY0MjgyMQ&ixlib=rb-4.0.3&w=500&h=1000');"
+		style="background-image: url({product.cover});"
 	/>
 	<div class="items-details">
 		{#if product.name.length > 25}
@@ -20,11 +20,11 @@
 		<div class="price">
 			{#if product.in_sales}
 				<div class="promotion">
-					<span class="old_price">xxx$</span>
-					<span class="reduction">(-xxx%)</span>
+					<span class="old_price">{product.price}$</span>
+					<span class="reduction">({product.sales_qty}%)</span>
 				</div>
 			{/if}
-			<span class="p-prix">{product.price}$</span>
+			<span class="p-prix">{product.get_product_price()}$</span>
 		</div>
 		<p>En stock: 10</p>
 		<div class="line-separator" />
@@ -41,7 +41,7 @@
 		flex-flow: column nowrap;
 		background: white;
 		border: 1px solid #ddd;
-		height: 250px;
+		height: 300px;
 		p {
 			padding: 0.4px !important;
 			margin: 0px !important;
@@ -50,7 +50,7 @@
 		.image {
 			background-size: cover;
 			background-position: center;
-			height: 150px !important;
+			min-height: 150px !important;
 		}
 
 		.p-name {
@@ -62,6 +62,7 @@
 			padding: 1rem;
 			align-items: center;
 			color: #666;
+			min-height: 80px;
 			.price {
 				display: flex;
 				flex-direction: column;

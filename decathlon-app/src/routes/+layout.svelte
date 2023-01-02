@@ -72,7 +72,7 @@
 			position: sticky;
 			top: 0;
 			grid-area: h;
-			z-index: 10;
+			z-index: 10000;
 		}
 		.sidebar {
 			grid-area: s;

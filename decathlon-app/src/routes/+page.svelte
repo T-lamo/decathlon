@@ -10,19 +10,27 @@
 	import { onMount } from 'svelte';
 	import CartProduct from './../features/boutique/components/cart/CartProduct.svelte';
 	import { show_side_bar } from '$lib/store/ui';
-	import { decathlon_products } from '$lib/recommendation/data';
+	import { covers, decathlon_products } from '$lib/recommendation/data';
 	import { decathlon_profiling } from '$lib/recommendation';
 	import { make_product_proposition } from '$lib/recommendation/utils';
 	import {  store_products } from '$lib/store/product';
+	import { algolia_insert } from '$lib/search-engine/algolia';
+	import { seed20ProductCover } from '$lib/data/seed';
+	import { get } from 'svelte/store';
 	
 
-	onMount(() => {
+	onMount(async () => {
 		show_side_bar.update((value) => true);
 		store_products.set(decathlon_products); 
 		// console.log("decathlon product",decathlon_products);
 		// console.log("profiling", decathlon_profiling);
 		// console.log("decathlon proposition",make_product_proposition(decathlon_profiling,2))
-	
+		// algolia_insert(decathlon_products);
+		
+		//seed20ProductCover("covers")
+		
+		// ;
+		
 	});
 
 	
@@ -40,16 +48,23 @@
 				<h1>Rien que pour vous!</h1>
 				<ListSegmentation category="all"/>
 			</div>
+
 			<div class="promotion">
-				<h1>Promotion</h1>
-				<ListProduct product_list={decathlon_products} />
+				<h1>Nos promotions</h1>
+				<ListProduct product_list={get(store_products).filter(product=>product.in_sales==true)} />
 			</div>
-			
+
+			<div class="promotion">
+				<h1>Nos produits</h1>
+				<ListProduct product_list={get(store_products).filter(product=>product.in_sales==false)} />
+			</div>
+
+<!-- 			
 			<div class="proposition">
 				<h1>Ce que nous vous proposons!</h1>
 
 				<ListProduct product_list={[]}/>
-			</div>
+			</div> -->
 		</div>
 		<div class="cart hide-xl-lg-md-sm-xs">
 			<CartProduct />

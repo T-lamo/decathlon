@@ -10,6 +10,10 @@ function create_search_store() {
 			return sort_product_on_segmentation_value(get(store_products), segmentation);
 		},
 		getby_category: (label_cat: string): Product[] => {
+			console.log("category cat", label_cat);
+			if (label_cat == "Promotions") {
+				return get(store_products).filter((data)=> data.in_sales == true);
+			}
 			const category = get_product_category(label_cat);
 			return get(store_products).filter((data) => data.productCategoryId == category.id);
 		},

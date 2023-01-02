@@ -121,3 +121,28 @@ export async function seed10users(collection: string) {
 		console.log(e);
 	}
 }
+
+export async function seed20ProductCover(collection: string) {
+	console.log('inside send users', collection);
+
+	try {
+		await fetch(`https://restapi.fr/generator`, {
+			method: 'POST',
+			body: JSON.stringify({
+				times: 20,
+				resourceName: collection,
+				image: {
+					type: 'image',
+					theme: 'product',
+					height: 1000,
+					width: 500
+				}
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+	} catch (e) {
+		console.log(e);
+	}
+}

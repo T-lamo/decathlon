@@ -52,7 +52,7 @@ export function algolia_insert(objects: any) {
   //     objectID: "myID2",
   //   },
   // ];
-  objects = objects.map((data)=> {
+  objects = objects.map((data: any)=> {
     return {...data, objectID:data.id}
   })
   // console.log(result)
