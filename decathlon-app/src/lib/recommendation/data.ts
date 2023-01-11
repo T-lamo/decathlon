@@ -3,7 +3,8 @@ import type { IProduct, IProductCategory } from '$lib/interfaces';
 import { Product, ProductCategory } from '$lib/models';
 import { json } from '@sveltejs/kit';
 import type { IProfiling, ISegmentation } from './interface';
-import { Profiling, Segmentation } from './model';
+import { Coordinate, Profiling, Segmentation } from './model';
+import { user_pos_arr } from './utils';
 
 export const products: Product[] = [
 	new Product({
@@ -390,3 +391,22 @@ export const decathlon_products = products.map(  (product: Product, index, arr:P
 });
 
 export const few_products: Product[] = decathlon_products.slice(12, 15);
+export function user_init_position ():{segmentation:string,value: number}[] {
+	const pos = new Coordinate({point: new Map()})
+	pos.point.set('csp+', 0);
+	pos.point.set('csp-',  0);
+	pos.point.set('feminin',  0);
+	pos.point.set('masculin',  0);
+	pos.point.set('aventurier',  0);
+	pos.point.set('casanier',  0);
+	pos.point.set('ecolo',  0);
+	pos.point.set('Enfant&bebe (00-17)',  0);
+	pos.point.set('Jeune(18 - 24)',  0);
+	pos.point.set('Jeune adulte ( 25 - 39 ans)',  0);
+	pos.point.set('Adulte(+40 ans)',  0);
+	pos.point.set('Individuel',  0);
+	pos.point.set('Collectif',  0);
+	
+	return user_pos_arr(pos);
+}
+

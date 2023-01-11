@@ -11,7 +11,7 @@
 </script>
 
 <div class="container">
-	<div class="image" style="background-image: url({image})" />
+	<div class="image" style="background-image: url({product.cover});" />
 	<div class="main">
 		<h2>{product.name}</h2>
 		<div class="line" />

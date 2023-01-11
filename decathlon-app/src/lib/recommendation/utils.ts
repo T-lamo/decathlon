@@ -1,5 +1,6 @@
 import type { IProduct } from '$lib/interfaces';
-import type { ICoordinate,  IProfiling, ISegmentation } from './interface';
+import { Product } from '$lib/models';
+import type { ICoordinate, IProfiling, ISegmentation } from './interface';
 import { Coordinate } from './model';
 
 export function distance_user_single_product(
@@ -53,7 +54,7 @@ export function user_position(profiling: IProfiling): ICoordinate {
 				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 				user_position_to_divide.get(curr_seg.label)! / profiling.axes.length
 			);
-			console.log("user coordinate",user_coordinate )
+			// console.log("user coordinate",user_coordinate )
 			return user_coordinate;
 		},
 		new Map<string, number>()
@@ -65,7 +66,7 @@ export function distance_user_all_product(
 	profiling: IProfiling
 ): { prod: IProduct; dist: number }[] {
 	const user_coordinate = user_position(profiling);
-	console.log("profiling utils.ts", profiling);
+	// console.log("profiling utils.ts", profiling);
 	return profiling.all_products.reduce<{ prod: IProduct; dist: number }[]>(
 		(previous: { prod: IProduct; dist: number }[], product: IProduct) => {
 			previous.push({
@@ -87,23 +88,56 @@ export function sort_distance_user_product(
 	return arr;
 }
 
-export function make_product_proposition(profiling: IProfiling, qty = 4): { prod: IProduct; dist: number }[] {
-	let product_proposition: { prod: IProduct; dist: number }[] = sort_distance_user_product(
-		distance_user_all_product(profiling)
+function sort_user_position_on_segmentation_value(arr: { segmentation: string; value: number }[]) {
+	arr.sort(function (a, b) {
+		return b.value - a.value;
+	});
+	return arr;
+}
+
+export function make_product_proposition(
+	profiling: IProfiling,
+	position: { segmentation: string; value: number }[],
+	qty = 4
+): IProduct[] {
+	// let product_proposition: { prod: IProduct; dist: number }[] = sort_distance_user_product(
+	// 	distance_user_all_product(profiling)
+	// );
+	const arr_proposition_product = position.reduce<IProduct[]>(
+		(acc: IProduct[], curr: { segmentation: string; value: number }) => {
+			if (acc.length < qty) {
+				const val = profiling.all_products.filter(
+					(data) => data.coordinate?.point.get(curr.segmentation) > 5
+				);
+				acc.push(...val);
+			}
+			return acc;
+		},
+		[]
 	);
-	
-	console.log("product user distance (utils.ts):", product_proposition);
-	
-	product_proposition=product_proposition.filter((product)=>{
-		 const names: string[] =profiling.clic_products.map((prod)=>{
-			return prod.name;
-		 })
-		 if(names.includes(product.prod.name))
-		 	return false;
-		 return true;
-	})
-	if(product_proposition.length>qty)
-		return product_proposition.slice(0,qty);
-	return product_proposition;
-	
+
+	const arr_proposition_product_remove_selected = arr_proposition_product.reduce<IProduct[]>(
+		(acc, curr) => {
+			const find_product_id =profiling.clic_products.find((data) => data.id == curr.id);
+			if (find_product_id==undefined) {
+				acc.push(curr);
+			}
+			return acc;
+		},
+		[]
+	);
+
+	console.log("without click",arr_proposition_product_remove_selected );
+	if (arr_proposition_product_remove_selected.length <= qty)
+		return arr_proposition_product_remove_selected
+	return arr_proposition_product_remove_selected.slice(0,qty);
+}
+
+export function user_pos_arr(pos: Coordinate) {
+	const user_pos: { segmentation: string; value: number }[] = [];
+
+	pos.point.forEach((value, key) => {
+		user_pos.push({ segmentation: key, value: value });
+	});
+	return sort_user_position_on_segmentation_value(user_pos);
 }

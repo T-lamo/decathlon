@@ -27,7 +27,9 @@
 		// console.log("decathlon proposition",make_product_proposition(decathlon_profiling,2))
 		// algolia_insert(decathlon_products);
 		
-		//seed20ProductCover("covers")
+		// seed20ProductCover("covers")
+		// seed20ProductCover("covers")
+		// seed20ProductCover("covers")
 		
 		// ;
 		
@@ -74,6 +76,7 @@
 	<!-- <div class="comments">
 		<ListComments></ListComments>
 	</div> -->
+	
 </section>
 
 <style lang="scss" scoped>

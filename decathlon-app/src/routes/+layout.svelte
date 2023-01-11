@@ -3,26 +3,31 @@
 	import Sidebar from './../components/Sidebar.svelte';
 	import Header from './../components/Header.svelte';
 	import Footer from './../components/Footer.svelte';
+	import ProductRange from './../components/ProductRange.svelte';
 
 	import './../lib/css/base.scss';
 	import './../lib/css/debug.scss';
 	import './../lib/css/reset.scss';
-	import { show_side_bar, store_dark_screen } from '$lib/store/ui';
+	import { show_panel_recommend, show_side_bar, store_dark_screen } from '$lib/store/ui';
 	import Search from './../components/Search.svelte';
 	import { onDestroy } from 'svelte';
 	import { search_engine_store } from '$lib/store/search-engine-store';
 	let is_show_side_bar: boolean = false;
 	let show_dark_scren: boolean = false;
-
+	let show_panel:boolean =false;
 	const unsubscribe_show_side_bar = show_side_bar.subscribe((value) => (is_show_side_bar = value));
 
 	const unsubscribe_show_dark_scren = store_dark_screen.subscribe(
 		(value) => (show_dark_scren = value)
 	);
+	const unsubscribe_show_panel_recommend = show_panel_recommend.subscribe((data:boolean)=>{
+		show_panel=data;
+	})
 
 	onDestroy(() => {
 		unsubscribe_show_dark_scren;
 		unsubscribe_show_side_bar;
+		unsubscribe_show_panel_recommend;
 	});
 	
 </script>
@@ -53,7 +58,12 @@
 			<ScreenDark />
 		</div>
 	{/if}
-</div>
+	{#if show_panel}
+	<ProductRange  />
+	{/if}
+
+</div>	
+
 
 <style lang="scss" scoped>
 	@use './../lib/css/mixin.scss' as mixin;

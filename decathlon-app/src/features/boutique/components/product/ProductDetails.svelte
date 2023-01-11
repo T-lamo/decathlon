@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Product } from '$lib/models';
 	import { make_product_proposition } from '$lib/recommendation/utils';
-	import {   store_products, store_product_propostion, store_profiling } from '$lib/store/product';
+	import {   store_products, store_product_propostion, store_profiling, store_user_position } from '$lib/store/product';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
 	import ListComments from './comments/ListComments.svelte';
@@ -10,6 +10,7 @@
 	import { segmentations } from '$lib/recommendation/data';
 	import type { IProfiling } from '$lib/recommendation/interface';
 	import { cart_store } from '$lib/store/cart-store';
+	import type { IProduct } from '$lib/interfaces';
 
 	export let product: Product;
 
@@ -24,9 +25,9 @@
 	onMount(() => {
 	});
 	store_profiling.subscribe((profiling)=>{
-		if(profiling.clic_products.length>=3){
-			store_product_propostion.set(make_product_proposition(profiling,3) as { prod: Product; dist: number; }[]);
-			product_proposition = get(store_product_propostion).map((data)=> data.prod);
+		if(profiling.clic_products.length>=2){
+			store_product_propostion.set(make_product_proposition(profiling,get(store_user_position),2) as IProduct[]);
+			product_proposition = get(store_product_propostion) as Product[];
 		}
 	})
 

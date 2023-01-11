@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { show_panel_recommend } from './../lib/store/ui.ts';
 	import { index } from './../../.svelte-kit/output/server/nodes/2.js';
 	import type { Product } from '$lib/models';
 	import { search_engine } from '$lib/search-engine/algolia';
@@ -9,7 +10,7 @@
 	import { onDestroy } from 'svelte';
 
 	$: product_qty = 0;
-
+	$: toogle =false;
 	function toggle_sidbar() {
 		show_side_bar.update((value) => !value);
 	}
@@ -21,6 +22,10 @@
 
 	$: search_engine_store.search(search_value);
 
+	function close_window() {
+		show_panel_recommend.set(!toogle);
+		toogle=!toogle;
+	}
 	onDestroy(unsubscribe_cart_store);
 </script>
 
@@ -59,10 +64,22 @@
 				</a>
 				<!-- <i class="fa-solid fa-house" /> -->
 			</li>
+			{#if toogle}
+			<li>
+				<i class="fa-solid fa-eye" on:click|preventDefault={close_window}></i>
+			</li>			{:else}
+			<li>
+				<i class="fa-sharp fa-solid fa-eye-slash" on:click|preventDefault={close_window}></i>
+			</li>			
+			{/if}
+			
+
+			
 			<li>
 				<i class="fa-solid fa-right-to-bracket" />
 			</li>
 
+			
 			<!-- <li>
 				<i class="fa-solid fa-right-from-bracket" />
 			</li> -->
