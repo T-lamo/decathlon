@@ -10,32 +10,42 @@
 	import { onMount } from 'svelte';
 	import CartProduct from './../features/boutique/components/cart/CartProduct.svelte';
 	import { show_side_bar } from '$lib/store/ui';
-	import { covers, decathlon_products } from '$lib/recommendation/data';
+	import { decathlon_products, read_cover } from '$lib/recommendation/data';
 	import { decathlon_profiling } from '$lib/recommendation';
 	import { make_product_proposition } from '$lib/recommendation/utils';
-	import {  store_products } from '$lib/store/product';
+	import { store_products } from '$lib/store/product';
 	import { algolia_insert } from '$lib/search-engine/algolia';
 	import { seed20ProductCover } from '$lib/data/seed';
 	import { get } from 'svelte/store';
-	
+
+	let display = false;
 
 	onMount(async () => {
 		show_side_bar.update((value) => true);
-		store_products.set(decathlon_products); 
-		// console.log("decathlon product",decathlon_products);
-		// console.log("profiling", decathlon_profiling);
-		// console.log("decathlon proposition",make_product_proposition(decathlon_profiling,2))
-		// algolia_insert(decathlon_products);
-		
-		// seed20ProductCover("covers")
-		// seed20ProductCover("covers")
-		// seed20ProductCover("covers")
-		
-		// ;
-		
-	});
+		await read_cover()
+			.then((covers) => {
+				decathlon_products.forEach(
+					(data, index) => (decathlon_products[index].cover = covers[index]['image'])
+				);
+			})
+			.finally(() => {
+				if (decathlon_products[0].cover.length == 0) {
+					seed20ProductCover('covers');
+					seed20ProductCover('covers');
+					seed20ProductCover('covers');
+					console.log('set cover');
+				}
+				console.log('link image', decathlon_products[0].cover);
+				store_products.set(decathlon_products);
+				// console.log("decathlon product",decathlon_products);
+				// console.log("profiling", decathlon_profiling);
+				// console.log("decathlon proposition",make_product_proposition(decathlon_profiling,2))
+				algolia_insert(decathlon_products);
+				display = true;
+			});
 
-	
+		// ;
+	});
 </script>
 
 <svelte:head>
@@ -43,41 +53,46 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<section class="container">
-	<div class="main-cart">
-		<div class="main">
-			<div class="segmentation">
-				<h1>Rien que pour vous!</h1>
-				<ListSegmentation category="all"/>
-			</div>
+{#if display}
+	<section class="container">
+		<div class="main-cart">
+			<div class="main">
+				<div class="segmentation">
+					<h1>Rien que pour vous!</h1>
+					<ListSegmentation category="all" />
+				</div>
 
-			<div class="promotion">
-				<h1>Nos promotions</h1>
-				<ListProduct product_list={get(store_products).filter(product=>product.in_sales==true)} />
-			</div>
+				<div class="promotion">
+					<h1>Nos promotions</h1>
+					<ListProduct
+						product_list={get(store_products).filter((product) => product.in_sales == true)}
+					/>
+				</div>
 
-			<div class="promotion">
-				<h1>Nos produits</h1>
-				<ListProduct product_list={get(store_products).filter(product=>product.in_sales==false)} />
-			</div>
+				<div class="promotion">
+					<h1>Nos produits</h1>
+					<ListProduct
+						product_list={get(store_products).filter((product) => product.in_sales == false)}
+					/>
+				</div>
 
-<!-- 			
+				<!-- 			
 			<div class="proposition">
 				<h1>Ce que nous vous proposons!</h1>
 
 				<ListProduct product_list={[]}/>
 			</div> -->
+			</div>
+			<div class="cart hide-xl-lg-md-sm-xs">
+				<CartProduct />
+			</div>
 		</div>
-		<div class="cart hide-xl-lg-md-sm-xs">
-			<CartProduct />
-		</div>
-	</div>
 
-	<!-- <div class="comments">
+		<!-- <div class="comments">
 		<ListComments></ListComments>
 	</div> -->
-	
-</section>
+	</section>
+{/if}
 
 <style lang="scss" scoped>
 	@use './../lib/css/base.scss';
@@ -86,12 +101,14 @@
 	.container {
 		display: flex;
 		flex-direction: column;
-
+		h1 {
+			font-size: 3rem;
+		}
 		@media screen and (min-width: 1401px) {
 			.main-cart {
 				display: grid;
 				grid-template-areas: 'm c';
-				grid-template-columns: 1fr 250px;
+				grid-template-columns: 1fr 400px;
 				gap: 1rem;
 
 				.main {

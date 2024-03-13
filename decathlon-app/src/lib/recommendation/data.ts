@@ -356,20 +356,16 @@ export const categories: ProductCategory[] = [
 	new ProductCategory({ id: 4, label: 'Promotions' })
 ];
 
-
 export async function read_cover() {
 	const result = await fetch('https://restapi.fr/api/covers');
 	const data = await result.json();
-	console.log(data);
 	return data;
 }
-export const covers= await read_cover();
-export const decathlon_products = products.map(  (product: Product, index, arr:Product[]) => {
+
+export const decathlon_products = products.map((product: Product, index, arr: Product[]) => {
 	segmentations.forEach((segmentation) => {
 		product.coordinate?.point.set(segmentation.label, -1);
 	});
-
-	
 
 	product.coordinate?.point.set('csp+', points[index][0]);
 	product.coordinate?.point.set('csp-', points[index][1]);
@@ -384,29 +380,28 @@ export const decathlon_products = products.map(  (product: Product, index, arr:P
 	product.coordinate?.point.set('Adulte(+40 ans)', points[index][10]);
 	product.coordinate?.point.set('Individuel', points[index][11]);
 	product.coordinate?.point.set('Collectif', points[index][12]);
-	
-	product.cover = covers[index].image;
+
+	// product.cover = covers[index].image;
 
 	return product;
 });
 
 export const few_products: Product[] = decathlon_products.slice(12, 15);
-export function user_init_position ():{segmentation:string,value: number}[] {
-	const pos = new Coordinate({point: new Map()})
+export function user_init_position(): { segmentation: string; value: number }[] {
+	const pos = new Coordinate({ point: new Map() });
 	pos.point.set('csp+', 0);
-	pos.point.set('csp-',  0);
-	pos.point.set('feminin',  0);
-	pos.point.set('masculin',  0);
-	pos.point.set('aventurier',  0);
-	pos.point.set('casanier',  0);
-	pos.point.set('ecolo',  0);
-	pos.point.set('Enfant&bebe (00-17)',  0);
-	pos.point.set('Jeune(18 - 24)',  0);
-	pos.point.set('Jeune adulte ( 25 - 39 ans)',  0);
-	pos.point.set('Adulte(+40 ans)',  0);
-	pos.point.set('Individuel',  0);
-	pos.point.set('Collectif',  0);
-	
+	pos.point.set('csp-', 0);
+	pos.point.set('feminin', 0);
+	pos.point.set('masculin', 0);
+	pos.point.set('aventurier', 0);
+	pos.point.set('casanier', 0);
+	pos.point.set('ecolo', 0);
+	pos.point.set('Enfant&bebe (00-17)', 0);
+	pos.point.set('Jeune(18 - 24)', 0);
+	pos.point.set('Jeune adulte ( 25 - 39 ans)', 0);
+	pos.point.set('Adulte(+40 ans)', 0);
+	pos.point.set('Individuel', 0);
+	pos.point.set('Collectif', 0);
+
 	return user_pos_arr(pos);
 }
-

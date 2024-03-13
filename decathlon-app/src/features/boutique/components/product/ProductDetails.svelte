@@ -1,7 +1,12 @@
 <script lang="ts">
 	import type { Product } from '$lib/models';
 	import { make_product_proposition } from '$lib/recommendation/utils';
-	import {   store_products, store_product_propostion, store_profiling, store_user_position } from '$lib/store/product';
+	import {
+		store_products,
+		store_product_propostion,
+		store_profiling,
+		store_user_position
+	} from '$lib/store/product';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
 	import ListComments from './comments/ListComments.svelte';
@@ -14,7 +19,7 @@
 
 	export let product: Product;
 
-	$: product_proposition = [] as Product[]; 
+	$: product_proposition = [] as Product[];
 	let product_images: string[] = [
 		'https://images.unsplash.com/photo-1603884574615-7b6ec4198a8c?ixid=MnwxMDkyNjJ8MHwxfHNlYXJjaHwzNDF8fG1vdmllfGVufDB8fHx8MTY2ODY0MjgyMQ&ixlib=rb-4.0.3&w=500&h=1000',
 		'https://images.unsplash.com/photo-1623864804069-438e36809fc2?ixid=MnwxMDkyNjJ8MHwxfHNlYXJjaHwxODV8fG1vdmllfGVufDB8fHx8MTY2ODg1NDU0Ng&ixlib=rb-4.0.3&w=500&h=1000',
@@ -22,14 +27,15 @@
 	];
 	let image_selected = 1;
 
-	onMount(() => {
-	});
-	store_profiling.subscribe((profiling)=>{
-		if(profiling.clic_products.length>=2){
-			store_product_propostion.set(make_product_proposition(profiling,get(store_user_position),2) as IProduct[]);
+	onMount(() => {});
+	store_profiling.subscribe((profiling) => {
+		if (profiling.clic_products.length >= 2) {
+			store_product_propostion.set(
+				make_product_proposition(profiling, get(store_user_position), 2) as IProduct[]
+			);
 			product_proposition = get(store_product_propostion) as Product[];
 		}
-	})
+	});
 
 	// store_product_propostion.subscribe((proposition)=>{
 	// })
@@ -44,7 +50,6 @@
 			image_selected -= 1;
 		}
 	}
-	
 </script>
 
 <div class="container">
@@ -77,7 +82,9 @@
 					<p>Etat: Neuf</p>
 				</div>
 			</div>
-			<button class="btn btn-primary" on:click={()=>cart_store.add_product(product)}>Ajouter au panier</button>
+			<button class="btn btn-primary" on:click={() => cart_store.add_product(product)}
+				>Ajouter au panier</button
+			>
 		</div>
 	</div>
 	<div class="similaire">
@@ -86,8 +93,7 @@
 	</div>
 	<div class="promotion">
 		<h1>Profiter de nos rabais</h1>
-		<ListProduct product_list={get(store_products).filter(product=>product.in_sales==true)} />
-
+		<ListProduct product_list={get(store_products).filter((product) => product.in_sales == true)} />
 	</div>
 	<!-- <div class="complemenaire">
 		<h1>Complementaire</h1>
@@ -104,12 +110,13 @@
 	.container {
 		display: flex;
 		flex-flow: column nowrap;
+		gap: 1rem;
 
 		.product-detail {
 			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+			grid-template-columns: 1fr 2fr;
 			gap: 1rem;
-			height: 500px;
+			height: 600px;
 
 			.image-show {
 				display: flex;

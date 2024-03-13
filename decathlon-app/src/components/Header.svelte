@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { show_panel_recommend } from './../lib/store/ui.ts';
-	import { index } from './../../.svelte-kit/output/server/nodes/2.js';
+	import { show_panel_recommend } from './../lib/store/ui';
 	import type { Product } from '$lib/models';
-	import { search_engine } from '$lib/search-engine/algolia';
+	//import { search_engine } from '$lib/search-engine/algolia';
 	import { cart_store } from '$lib/store/cart-store';
-	import { store_search_engine_result } from '$lib/store/product';
-	import { search_engine_store } from '$lib/store/search-engine-store';
+	//import { store_search_engine_result } from '$lib/store/product';
+	//import { search_engine_store } from '$lib/store/search-engine-store';
 	import { show_side_bar, store_dark_screen } from '$lib/store/ui';
 	import { onDestroy } from 'svelte';
+	import { search_engine_store } from '$lib/store/search-engine-store';
 
 	$: product_qty = 0;
-	$: toogle =false;
+	$: toogle = false;
 	function toggle_sidbar() {
 		show_side_bar.update((value) => !value);
 	}
@@ -24,7 +24,7 @@
 
 	function close_window() {
 		show_panel_recommend.set(!toogle);
-		toogle=!toogle;
+		toogle = !toogle;
 	}
 	onDestroy(unsubscribe_cart_store);
 </script>
@@ -50,8 +50,8 @@
 			<li>
 				<a href="/cart">
 					<div class="cart_qty">
-						<!-- <span class="qty">{product_qty}</span> -->
 						<i class="fa-solid fa-cart-shopping" />
+						<span class="qty">{product_qty}</span>
 					</div>
 				</a>
 			</li>
@@ -65,21 +65,19 @@
 				<!-- <i class="fa-solid fa-house" /> -->
 			</li>
 			{#if toogle}
-			<li>
-				<i class="fa-solid fa-eye" on:click|preventDefault={close_window}></i>
-			</li>			{:else}
-			<li>
-				<i class="fa-sharp fa-solid fa-eye-slash" on:click|preventDefault={close_window}></i>
-			</li>			
+				<li>
+					<i class="fa-solid fa-eye" on:click|preventDefault={close_window} />
+				</li>
+			{:else}
+				<li>
+					<i class="fa-sharp fa-solid fa-eye-slash" on:click|preventDefault={close_window} />
+				</li>
 			{/if}
-			
 
-			
 			<li>
 				<i class="fa-solid fa-right-to-bracket" />
 			</li>
 
-			
 			<!-- <li>
 				<i class="fa-solid fa-right-from-bracket" />
 			</li> -->
@@ -100,27 +98,32 @@
 		display: flex;
 		flex-direction: column;
 		background: var(--gray-2);
+		height: inherit;
+
+		i {
+			font-size: 2rem;
+		}
 		.header {
 			display: flex;
 			background: var(--primary-1);
 			justify-content: space-between;
+			align-items: center;
 			flex: 1fr;
-
+			height: inherit;
 			border-bottom: 1px solid var(--primary-2);
 			padding-left: 1rem;
 			flex: 1fr;
 
 			.logo {
-				font-size: 1.8rem;
+				font-size: 2.8rem;
 				margin-bottom: 0;
 				display: flex;
 				flex-flow: row nowrap;
 				align-items: center;
 				justify-content: center;
 				a {
-					font-size: 2rem;
+					font-size: 3rem;
 					color: var(--gray-1);
-					font-family: 'Liu Jian Mao Cao', cursive;
 					align-self: center;
 					cursor: pointer;
 				}
@@ -132,8 +135,10 @@
 				max-width: 500px;
 
 				i {
-					align-self: center;
+					display: flex;
+					align-items: center;
 					margin-left: 1rem;
+					font-size: 3rem;
 				}
 
 				input {
@@ -180,12 +185,10 @@
 				color: white;
 			}
 			.cart_qty {
-				position: relative;
+				display: flex;
 				.qty {
-					position: fixed;
 					color: var(--gray-1);
 					background-color: red;
-					position: fixed;
 					border-radius: 50%;
 					padding: 2px;
 				}
@@ -194,14 +197,15 @@
 
 		.ctn-search {
 			display: flex;
-			margin: 1rem;
+			margin: 2rem;
 			height: 60px;
 			width: auto;
 			align-self: center;
+
 			i {
 				align-self: center;
 				margin-left: 1rem;
-				font-size: 2rem;
+				font-size: 3rem;
 			}
 			input {
 				padding: 2rem;

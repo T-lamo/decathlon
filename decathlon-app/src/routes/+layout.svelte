@@ -10,26 +10,51 @@
 	import './../lib/css/reset.scss';
 	import { show_panel_recommend, show_side_bar, store_dark_screen } from '$lib/store/ui';
 	import Search from './../components/Search.svelte';
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { search_engine_store } from '$lib/store/search-engine-store';
+	import { seed20ProductCover } from '$lib/data/seed';
+	import { read_cover, decathlon_products } from '$lib/recommendation/data';
+	import { algolia_insert } from '$lib/search-engine/algolia';
+	import { store_products } from '$lib/store/product';
 	let is_show_side_bar: boolean = false;
 	let show_dark_scren: boolean = false;
-	let show_panel:boolean =false;
+	let show_panel: boolean = false;
 	const unsubscribe_show_side_bar = show_side_bar.subscribe((value) => (is_show_side_bar = value));
 
 	const unsubscribe_show_dark_scren = store_dark_screen.subscribe(
 		(value) => (show_dark_scren = value)
 	);
-	const unsubscribe_show_panel_recommend = show_panel_recommend.subscribe((data:boolean)=>{
-		show_panel=data;
-	})
+	const unsubscribe_show_panel_recommend = show_panel_recommend.subscribe((data: boolean) => {
+		show_panel = data;
+	});
+
+	onMount(async () => {
+		show_side_bar.update((value) => true);
+		await read_cover().then((covers) => {
+			decathlon_products.forEach((data, index) => (data.cover = covers[index]['image']));
+
+			if (decathlon_products[0].cover.length == 0) {
+				seed20ProductCover('covers');
+				seed20ProductCover('covers');
+				seed20ProductCover('covers');
+				console.log('set cover');
+			}
+			console.log('link image', decathlon_products[0].cover);
+			store_products.set(decathlon_products);
+			// console.log("decathlon product",decathlon_products);
+			// console.log("profiling", decathlon_profiling);
+			// console.log("decathlon proposition",make_product_proposition(decathlon_profiling,2))
+			algolia_insert(decathlon_products);
+		});
+
+		// ;
+	});
 
 	onDestroy(() => {
 		unsubscribe_show_dark_scren;
 		unsubscribe_show_side_bar;
 		unsubscribe_show_panel_recommend;
 	});
-	
 </script>
 
 <div class="app">
@@ -59,28 +84,29 @@
 		</div>
 	{/if}
 	{#if show_panel}
-	<ProductRange  />
+		<ProductRange />
 	{/if}
-
-</div>	
-
+</div>
 
 <style lang="scss" scoped>
 	@use './../lib/css/mixin.scss' as mixin;
 
 	.app {
+		font-size: 1.5rem;
+		font-family: 'Roboto', sans-serif;
 		display: grid;
 		grid-template-areas:
 			'h h'
 			's m'
 			'f f';
-		grid-template-rows: 72px 1fr 50px;
+		grid-template-rows: 90px 1fr 50px;
 		grid-template-columns: 400px 1fr;
-		column-gap: 1rem;
+		gap: 1rem;
 
 		.header {
 			position: sticky;
 			top: 0;
+			height: 90px;
 			grid-area: h;
 			z-index: 10000;
 		}
@@ -105,11 +131,14 @@
 			width: 50%;
 			margin-left: 25%;
 			position: fixed;
-			top: 60px;
-			z-index: 10;
+			top: 90px;
+			z-index: 100000;
 		}
 	}
 
+	h1 {
+		font-size: 3rem;
+	}
 	@media screen and (max-width: 577px) {
 		.app {
 			.search {

@@ -6,7 +6,7 @@
 			<a href="/contact"> Nous contacter </a>
 		</p>
 		<p>Tel: 0749286021</p>
-		<p>Copyright © 2021 constellation, Inc.</p>
+		<p>Copyright © 2024</p>
 	</footer>
 </div>
 

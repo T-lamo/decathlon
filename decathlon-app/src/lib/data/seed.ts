@@ -1,16 +1,16 @@
-export async function seed(collection: string) {
-	try {
-		await fetch(`https://restapi.fr/api/${collection}`, {
-			method: 'POST',
-			body: JSON.stringify(data),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-	} catch (e) {
-		console.log(e);
-	}
-}
+// export async function seed(collection: string) {
+// 	try {
+// 		await fetch(`https://restapi.fr/api/${collection}`, {
+// 			method: 'POST',
+// 			body: JSON.stringify(data),
+// 			headers: {
+// 				'Content-Type': 'application/json'
+// 			}
+// 		});
+// 	} catch (e) {
+// 		console.log(e);
+// 	}
+// }
 
 export async function seed20movie(collection: string) {
 	console.log('inside send messages', collection);

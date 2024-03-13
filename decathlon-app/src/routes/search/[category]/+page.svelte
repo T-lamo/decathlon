@@ -5,8 +5,8 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	
 </script>
+
 <div class="container">
 	<div class="segmentation">
 		<h1>Rien que pour vous!</h1>
@@ -16,7 +16,10 @@
 		<h1>Nos produits</h1>
 		<ListProduct product_list={search_store.getby_category(data.item)} />
 	</div>
-
-
 </div>
-<style lang="scss" scoped></style>
+
+<style lang="scss" scoped>
+	h1 {
+		font-size: 3rem;
+	}
+</style>

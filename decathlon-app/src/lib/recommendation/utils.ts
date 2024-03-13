@@ -107,7 +107,7 @@ export function make_product_proposition(
 		(acc: IProduct[], curr: { segmentation: string; value: number }) => {
 			if (acc.length < qty) {
 				const val = profiling.all_products.filter(
-					(data) => data.coordinate?.point.get(curr.segmentation) > 5
+					(data) => data.coordinate!.point.get(curr.segmentation)! > 5
 				);
 				acc.push(...val);
 			}
@@ -118,8 +118,8 @@ export function make_product_proposition(
 
 	const arr_proposition_product_remove_selected = arr_proposition_product.reduce<IProduct[]>(
 		(acc, curr) => {
-			const find_product_id =profiling.clic_products.find((data) => data.id == curr.id);
-			if (find_product_id==undefined) {
+			const find_product_id = profiling.clic_products.find((data) => data.id == curr.id);
+			if (find_product_id == undefined) {
 				acc.push(curr);
 			}
 			return acc;
@@ -127,10 +127,10 @@ export function make_product_proposition(
 		[]
 	);
 
-	console.log("without click",arr_proposition_product_remove_selected );
+	console.log('without click', arr_proposition_product_remove_selected);
 	if (arr_proposition_product_remove_selected.length <= qty)
-		return arr_proposition_product_remove_selected
-	return arr_proposition_product_remove_selected.slice(0,qty);
+		return arr_proposition_product_remove_selected;
+	return arr_proposition_product_remove_selected.slice(0, qty);
 }
 
 export function user_pos_arr(pos: Coordinate) {

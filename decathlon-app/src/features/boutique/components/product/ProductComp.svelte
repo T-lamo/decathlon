@@ -6,10 +6,7 @@
 </script>
 
 <div class="items">
-	<div
-		class="image"
-		style="background-image: url({product.cover});"
-	/>
+	<div class="image" style="background-image: url({product.cover});" />
 	<div class="items-details">
 		{#if product.name.length > 25}
 			<p class="p-name">{product.name.slice(0, 25)}...</p>
@@ -31,17 +28,20 @@
 	</div>
 	<div class="icons">
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<i class="fa-solid fa-cart-shopping" on:click|preventDefault={()=>cart_store.add_product(product)} />
+		<i
+			class="fa-solid fa-cart-shopping"
+			on:click|preventDefault={() => cart_store.add_product(product)}
+		/>
 	</div>
 </div>
 
 <style lang="scss" scoped>
 	.items {
 		display: flex;
-		flex-flow: column nowrap;
+		flex-flow: column;
 		background: white;
 		border: 1px solid #ddd;
-		height: 300px;
+		height: 350px;
 		p {
 			padding: 0.4px !important;
 			margin: 0px !important;
@@ -50,7 +50,7 @@
 		.image {
 			background-size: cover;
 			background-position: center;
-			min-height: 150px !important;
+			min-height: 200px !important;
 		}
 
 		.p-name {

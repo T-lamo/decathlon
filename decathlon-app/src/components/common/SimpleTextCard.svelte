@@ -15,11 +15,11 @@
 		align-items: center;
 		justify-content: center;
 		color: var(--secondary-black);
-		font-size: x-small;
+		font-size: 1.3rem;
 		font-weight: 600;
 		padding: 1rem;
 		border-radius: 4px;
-		min-height: 50px;
+		min-height: 70px;
 	}
 
 	.container:hover {
